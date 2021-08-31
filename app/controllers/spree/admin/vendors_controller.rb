@@ -6,6 +6,7 @@ module Spree
         if permitted_resource_params[:image]
           @vendor.build_image(attachment: permitted_resource_params.delete(:image))
         end
+
         super
       end
 
@@ -13,6 +14,7 @@ module Spree
         if permitted_resource_params[:image]
           @vendor.create_image(attachment: permitted_resource_params.delete(:image))
         end
+
         format_translations if defined? SpreeGlobalize
         super
       end

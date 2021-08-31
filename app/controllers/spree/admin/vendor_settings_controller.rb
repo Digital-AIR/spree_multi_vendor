@@ -8,7 +8,8 @@ module Spree
         if vendor_params[:image]
           @vendor.create_image(attachment: vendor_params[:image])
         end
-        if @vendor.update(vendor_params.except(:image))
+
+        if @vendor.update(vendor_params.except(:image)) 
           redirect_to admin_vendor_settings_path
         else
           render :edit
