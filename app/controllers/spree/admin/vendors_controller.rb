@@ -56,8 +56,6 @@ module Spree
 
       def vendor_includes
         {
-          image: [],
-          products: []
           banner: []
         }
 
