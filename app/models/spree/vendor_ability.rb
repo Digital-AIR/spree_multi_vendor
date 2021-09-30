@@ -28,6 +28,7 @@ class Spree::VendorAbility
       apply_video_permissions
       apply_video_reviews_permissions
       apply_product_reviews_permissions
+      apply_related_product_permissions
     end
   end
 
@@ -172,6 +173,10 @@ class Spree::VendorAbility
     cannot_display_model(Spree::Review)
     return unless Spree::Review.reflect_on_association(:product)
     can :manage, Spree::Review, product: { vendor_id: @vendor_ids }
+  end
+
+  def apply_related_product_permissions
+    can :manage, Spree::Relation
   end
 
   def cannot_display_model(model)
