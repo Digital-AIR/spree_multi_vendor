@@ -26,6 +26,9 @@ class Spree::VendorAbility
       apply_vendor_settings_permissions
       apply_state_changes_permissions
       apply_video_permissions
+      apply_video_reviews_permissions
+      apply_product_reviews_permissions
+      apply_related_product_permissions
     end
   end
 
@@ -158,6 +161,22 @@ class Spree::VendorAbility
     can :modify, Spree::VideoTaxon
     can :manage, Spree::Video, vendor_id: @vendor_ids
     can :create, Spree::Video
+  end
+
+  def apply_video_reviews_permissions
+    cannot_display_model(Spree::VideoReview)
+    return unless Spree::VideoReview.reflect_on_association(:video)
+    can :manage, Spree::VideoReview, video: { vendor_id: @vendor_ids } 
+  end
+
+  def apply_product_reviews_permissions
+    cannot_display_model(Spree::Review)
+    return unless Spree::Review.reflect_on_association(:product)
+    can :manage, Spree::Review, product: { vendor_id: @vendor_ids }
+  end
+
+  def apply_related_product_permissions
+    can :manage, Spree::Relation
   end
 
   def cannot_display_model(model)
