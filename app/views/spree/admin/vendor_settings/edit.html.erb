@@ -2,6 +2,10 @@
   <%= @vendor.name %>
 <% end %>
 
+<% content_for :page_actions do %>
+  <%= vendor_preview_link(@vendor) %>
+<% end %>
+
 <%= form_for [:admin, @vendor], url: admin_vendor_settings_url do |f| %>
   <fieldset>
     <%= render partial: 'spree/admin/shared/error_messages', locals: { target: @vendor } %>
