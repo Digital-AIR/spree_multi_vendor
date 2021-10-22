@@ -9,6 +9,7 @@ module Spree
         has_one :image, serializer: :vendor_image
         has_one :banner, serializer: :vendor_banner
         has_many :products
+        has_many :videos
       end
     end
   end
