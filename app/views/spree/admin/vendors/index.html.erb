@@ -45,6 +45,7 @@
         <th>
           <%= sort_link @search, :state, I18n.t(:state, scope: 'activerecord.attributes.spree/vendor') %>
         </th>
+        <th class="text-center"><%= "Avg Rating" %></th>
         <th class="actions"></th>
       </tr>
     </thead>
@@ -61,6 +62,7 @@
             <span class="label label-<%= vendor.state.downcase %>"><%= vendor.state.humanize.downcase %></span>
             <span class="icon icon-filter filterable js-add-filter" data-ransack-field="q_state_eq" data-ransack-value="<%= vendor.state %>"></span>
           </td>
+          <td class="text-center"><%= vendor.avg_rating %></td>
           <td class="actions actions-2 text-right">
             <%= link_to_edit vendor, no_text: true, class: 'edit' if can?(:edit, vendor) %>
             <!-- Add translation icon support -->
