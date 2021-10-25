@@ -59,6 +59,27 @@ module Spree
                  :slug, fallbacks_for_empty_translations: true
     end
 
+    def recalculate_rating
+      self[:reviews_count] = videos.sum(:reviews_count).to_f + products.sum(:reviews_count).to_f
+      self[:avg_rating] = if reviews_count > 0
+                            video_reviews_sum = 0
+                            videos.each do |video|
+                              video_reviews_sum += video.video_reviews.approved.sum(:rating).to_f
+                            end
+
+                            reviews_sum = 0
+                            products.each do |product|
+                              reviews_sum += product.reviews.approved.sum(:rating).to_f
+                            end
+
+                            (video_reviews_sum.to_f + reviews_sum.to_f) / reviews_count
+                          else
+                            0
+                          end
+
+      save
+    end
+
     private
 
     def create_stock_location
@@ -74,5 +95,6 @@ module Spree
         stock_locations.update_all({ name: name })
       end
     end
+
   end
 end

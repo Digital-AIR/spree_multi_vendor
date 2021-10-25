@@ -3,6 +3,11 @@
   <%= @vendor.name %>
 <% end %>
 
+<% content_for :page_actions do %>
+  <h5 style="padding-top:10px;">Avg Rating: <%=@vendor.avg_rating %></h5>&nbsp;
+  <%= vendor_preview_link(@vendor) %>
+<% end %>
+
 <%= form_for [:admin, @vendor] do |f| %>
   <fieldset>
     <%= render partial: 'form', locals: { f: f } %>
