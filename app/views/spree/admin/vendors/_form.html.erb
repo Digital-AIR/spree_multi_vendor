@@ -47,6 +47,11 @@
     <%= f.email_field :notification_email, class: 'form-control' %>
   <% end %>
 
+  <%= f.field_container :dummy_review do%>
+    <%= f.label :dummy_review, "Review for storefront" %>
+    <%= f.text_area :dummy_review, class: 'form-control' %>
+  <% end %>
+
   <%= f.field_container :about_us do %>
     <%= f.label :about_us %>
     <%= f.text_area :about_us, { rows: "10", class: "form-control spree-rte" } %>
