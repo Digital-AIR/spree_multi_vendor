@@ -4,7 +4,7 @@ module Spree
       class VendorSerializer < BaseSerializer
         set_type :vendor
 
-        attributes :name, :about_us, :meta_about_us, :slug, :contact_us, :facebook, :twitter, :instagram, :avg_rating, :reviews_count
+        attributes :name, :about_us, :meta_about_us, :slug, :contact_us, :facebook, :twitter, :instagram, :avg_rating, :reviews_count, :dummy_review 
 
         has_one :image, serializer: :vendor_image
         has_one :banner, serializer: :vendor_banner
