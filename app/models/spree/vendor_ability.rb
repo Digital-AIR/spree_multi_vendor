@@ -28,7 +28,9 @@ class Spree::VendorAbility
       apply_video_permissions
       apply_video_reviews_permissions
       apply_product_reviews_permissions
-      apply_related_product_permissions
+      apply_related_products_permissions
+      apply_return_authorizations_permissions
+      apply_customer_returns_permissions
     end
   end
 
@@ -52,7 +54,7 @@ class Spree::VendorAbility
                   end
 
     if order_scope.present?
-      can %i[admin show index edit update cart], Spree::Order, order_scope.merge(state: 'complete')
+      can %i[admin show index edit update cart], Spree::Order, order_scope
     else
       cannot_display_model(Spree::Order)
     end
@@ -175,8 +177,24 @@ class Spree::VendorAbility
     can :manage, Spree::Review, product: { vendor_id: @vendor_ids }
   end
 
-  def apply_related_product_permissions
+  def apply_related_products_permissions
     can :manage, Spree::Relation
+  end
+
+  def apply_return_authorizations_permissions
+
+    can :manage, Spree::ReturnAuthorization, stock_location: { vendor_id: @vendor_ids }
+    can :manage, Spree::ReturnIndex
+    can :create, Spree::ReturnAuthorization
+
+  end
+
+  def apply_customer_returns_permissions
+    can :manage, Spree::CustomerReturn, stock_location: { vendor_id: @vendor_ids }
+    can :create, Spree::CustomerReturn
+    can :manage, Spree::ReturnItem, inventory_unit: {variant: {product:{ vendor_id: @vendor_ids }}}
+    can :manage, Spree::InventoryUnit, variant: {product:{ vendor_id: @vendor_ids }}
+
   end
 
   def cannot_display_model(model)
