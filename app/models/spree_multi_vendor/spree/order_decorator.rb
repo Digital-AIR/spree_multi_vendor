@@ -74,10 +74,16 @@ module SpreeMultiVendor::Spree::OrderDecorator
   ].freeze
 
   METHOD_NAMES.each do |method_name|
-    define_method("display_vendor_#{method_name}") do |vendor|
-      Spree::Money.new(send("vendor_#{method_name}", vendor), { currency: currency })
+    define_method("display_vendor_#{method_name}") do |vendor = nil|
+      Spree::Money.new(send("vendor_#{method_name}", vendor), { currency: currency }) if vendor.present?
     end
   end
+
+  # METHOD_NAMES.each do |method_name|
+  #   define_method("display_vendor_#{method_name}") do |**args_list|
+  #     Spree::Money.new(send("vendor_#{method_name}", **args_list), { currency: currency }) if args_list.present?
+  #   end
+  # end
 
   def send_notification_mails_to_vendors
     vendor_ids.each do |vendor_id|
