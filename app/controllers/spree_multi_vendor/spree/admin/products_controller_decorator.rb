@@ -17,7 +17,7 @@ module SpreeMultiVendor::Spree::Admin::ProductsControllerDecorator
   private
 
   def load_vendors
-    @vendors = Spree::Vendor.order(Arel.sql('LOWER(name)'))
+    @vendors = Spree::Vendor.order(Arel.sql('LOWER(name)')).where(state: "active")
   end
 end
 
